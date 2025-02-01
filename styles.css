@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Input, Button, and Dropdown Styling */
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 200px; /* Match the button width */
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Table Styling */
+table {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Further reduce table row height */
+th, td {
+    padding: 4px 8px; /* Further reduced vertical padding */
+    font-size: 12px; /* Smaller text size */
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Header Styling */
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th {
+    font-weight: bold;
+}
+
+/* Chart Styling */
+.chart-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    height: 400px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    table {
+        width: 100%;
+    }
+
+    input, select, button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .chart-container {
+        width: 100%;
+        height: 300px;
+    }
+}
