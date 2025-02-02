@@ -3,18 +3,19 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
     background-color: #f4f4f4;
     padding: 0 10px; /* Add some padding for mobile screens */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 
 .container {
-    text-align: center;
     width: 100%; /* Allow container to take full width */
     max-width: 900px; /* Max width constraint */
     margin: 0 auto; /* Center the container */
+    text-align: center;
 }
 
 /* Center the pull-down menu and button */
@@ -24,6 +25,7 @@ body {
     gap: 20px;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%; /* Ensure it takes the full width */
 }
 
 /* Styling for the select menu and button */
@@ -31,6 +33,8 @@ body {
     font-size: 1.2rem; /* Enlarge font */
     padding: 10px;
     margin-right: 10px;
+    width: auto;
+    max-width: 100%; /* Ensure it doesn't exceed the screen width */
 }
 
 button {
@@ -45,6 +49,7 @@ button {
     height: 400px; /* Retain the original chart height */
     margin: 0 auto;
     max-width: 100%; /* Ensure it doesn't exceed screen width */
+    display: block;
 }
 
 /* Table styling */
