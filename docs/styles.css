@@ -7,10 +7,14 @@ body {
     min-height: 100vh;
     margin: 0;
     background-color: #f4f4f4;
+    padding: 0 10px; /* Add some padding for mobile screen */
 }
 
 .container {
     text-align: center;
+    width: 100%; /* Allow container to take full width */
+    max-width: 900px; /* Max width constraint */
+    margin: 0 auto; /* Center the container */
 }
 
 /* Center the pull-down menu and button */
@@ -35,19 +39,17 @@ button {
     cursor: pointer;
 }
 
-/* Chart container - same width as table */
+/* Chart container - making width consistent with the table */
 .chart-container {
-    width: 80%; /* Same width as table */
-    max-width: 900px;
-    margin: 20px auto;
-    height: 400px; /* Retain original chart height */
+    width: 100%; /* Take up full width of the container */
+    height: 400px; /* Retain the original chart height */
+    margin: 0 auto;
 }
 
-/* Table styling - same width as chart */
+/* Table styling */
 table {
-    width: 80%; /* Same width as chart */
-    max-width: 900px; /* Matching max width */
-    margin: 20px auto;
+    width: 100%; /* Full width for mobile screens */
+    margin: 20px 0;
     border-collapse: collapse;
     background-color: white;
 }
@@ -62,4 +64,24 @@ th, td {
 thead {
     background-color: #007bff;
     color: white;
+}
+
+/* Media Queries for mobile responsiveness */
+@media only screen and (max-width: 768px) {
+    body {
+        padding: 0 5px; /* Smaller padding for iPhone screens */
+    }
+
+    /* Ensure table text is not too large on smaller screens */
+    th, td {
+        font-size: 0.8rem; /* Slightly smaller font for mobile */
+    }
+
+    #playerSelect, button {
+        font-size: 1rem; /* Smaller font size for mobile screens */
+    }
+
+    .chart-container {
+        height: 300px; /* Make the chart height smaller on mobile */
+    }
 }
