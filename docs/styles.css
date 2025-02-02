@@ -46,10 +46,16 @@ button {
 /* Chart container - ensure full width */
 .chart-container {
     width: 100%; /* Full width */
+    max-width: 100%; /* Ensure it doesn't exceed screen width */
     height: 400px; /* Retain the original chart height */
     margin: 0 auto;
-    max-width: 100%; /* Ensure it doesn't exceed screen width */
-    display: block;
+    display: block; /* Block-level display to ensure full width */
+}
+
+/* Ensure canvas inside chart container expands to fill the space */
+.chart-container canvas {
+    width: 100% !important; /* Force the canvas to take 100% width */
+    height: auto !important; /* Adjust height automatically to maintain aspect ratio */
 }
 
 /* Table styling */
@@ -87,7 +93,8 @@ thead {
         font-size: 1rem; /* Smaller font size for mobile screens */
     }
 
+    /* Chart height adjusted for mobile view */
     .chart-container {
-        height: 300px; /* Make the chart height smaller on mobile */
+        height: 300px; /* Resize chart for mobile devices */
     }
 }
