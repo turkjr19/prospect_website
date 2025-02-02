@@ -40,26 +40,24 @@ async function loadPlayerData() {
         // Filter only the 2024-2025 season
         const filteredLogs = gameLogs.filter(log => log.game.season.slug === '2024-2025');
 
-        // Sort by date DESCENDING (most recent game first) for the table
+        // Sort by date DESCENDING (latest game first)
         filteredLogs.sort((a, b) => new Date(b.game.dateTime) - new Date(a.game.dateTime));
 
-        let tableRows = '';
         let cumulativePoints = 0;
         let cumulativePointsList = [];
 
-        // Reverse iterate through the table list to calculate cumulative points correctly
-        for (let i = filteredLogs.length - 1; i >= 0; i--) {
-            const log = filteredLogs[i];
+        // Calculate cumulative points correctly
+        filteredLogs.slice().reverse().forEach(log => {
             cumulativePoints += log.stats.PTS || 0;
-            cumulativePointsList.unshift(cumulativePoints); // Store in correct order for table
-        }
+            cumulativePointsList.push(cumulativePoints);
+        });
 
-        // Show only the latest 10 games in the table
-        const latestLogs = filteredLogs.slice(0, 10);
+        // Reverse cumulative points for table display ONLY
+        const reversedCumulativePointsList = [...cumulativePointsList].reverse();
+
+        // Generate table with all games
         let tableData = '';
-        for (let i = 0; i < latestLogs.length; i++) {
-            const log = latestLogs[i];
-
+        filteredLogs.forEach((log, i) => {
             const seasonSlug = log.game.season.slug || 'N/A';
             const league = log.game.league.name || 'N/A';
             const date = new Date(log.game.dateTime).toLocaleDateString();
@@ -68,11 +66,8 @@ async function loadPlayerData() {
             const G = log.stats.G || 0;
             const A = log.stats.A || 0;
             const PTS = log.stats.PTS || 0;
+            let correctCumulativePoints = reversedCumulativePointsList[i];
 
-            // Assign the correct cumulative points value
-            let correctCumulativePoints = cumulativePointsList[i];
-
-            // Append table row with most recent game at the top
             tableData += `
                 <tr>
                     <td>${seasonSlug}</td>
@@ -86,17 +81,20 @@ async function loadPlayerData() {
                     <td>${correctCumulativePoints}</td>
                 </tr>
             `;
-        }
+        });
 
-        // Insert table data (most recent 10 games)
         document.getElementById('gameLogs').querySelector('tbody').innerHTML = tableData;
 
-        // Calculate EMA (Smoothing Factor α = 2 / (N + 1), where N is smoothing period)
-        const emaPeriod = 5; // Adjust period as needed
+        // Calculate EMA (Exponential Moving Average)
+        const emaPeriod = 5;
         const emaData = calculateEMA(cumulativePointsList, emaPeriod);
 
-        // Draw the chart with all games and the EMA trend line
-        drawCumulativePointsChart(filteredLogs.map((_, index) => `G${index + 1}`), cumulativePointsList, emaData);
+        // Draw the chart
+        drawCumulativePointsChart(
+            filteredLogs.map((_, index) => `G${index + 1}`).reverse(),
+            cumulativePointsList,
+            emaData
+        );
 
     } catch (error) {
         console.error('Error fetching game logs:', error);
@@ -120,20 +118,15 @@ function drawCumulativePointsChart(labels, data, emaData) {
         window.cumulativeChart.destroy();
     }
 
-    // Reverse only the labels (for the X-axis) and keep the cumulative points and EMA data as is
-    const reversedLabels = labels.reverse();
-    const reversedEmaData = emaData;  // Keep the EMA data as is
-    const reversedData = data; // Keep the cumulative points data as is
-
     // Create Chart.js Line Chart
     window.cumulativeChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: reversedLabels, // Reverse the labels (for the X-axis)
+            labels: labels,
             datasets: [
                 {
                     label: 'Cumulative Points',
-                    data: reversedData, // Use the correct cumulative points data
+                    data: data,
                     borderColor: '#007bff',
                     backgroundColor: 'rgba(0, 123, 255, 0.1)',
                     borderWidth: 2,
@@ -142,12 +135,12 @@ function drawCumulativePointsChart(labels, data, emaData) {
                     fill: true,
                 },
                 {
-                    label: `EMA (5 games)`,
-                    data: reversedEmaData, // Use the correct EMA data
+                    label: 'EMA (5 games)',
+                    data: emaData,
                     borderColor: 'red',
                     borderWidth: 2,
-                    borderDash: [5, 5], // Dashed line for EMA
-                    pointRadius: 0, // Hide points
+                    borderDash: [5, 5],
+                    pointRadius: 0,
                     fill: false,
                 }
             ]
@@ -160,8 +153,7 @@ function drawCumulativePointsChart(labels, data, emaData) {
                     title: {
                         display: true,
                         text: 'Game Number'
-                    },
-                    reverse: true, // Reverse the X axis to have the most recent game on the right
+                    }
                 },
                 y: {
                     title: {
@@ -175,17 +167,15 @@ function drawCumulativePointsChart(labels, data, emaData) {
     });
 }
 
-// Function to calculate EMA
+// Function to calculate EMA (Exponential Moving Average)
 function calculateEMA(data, period) {
-    if (data.length < period) return data; // Not enough data
+    if (data.length < period) return data;
 
     const ema = [];
     const alpha = 2 / (period + 1);
 
-    // First EMA value is just the first data point
     ema[0] = data[0];
 
-    // Compute EMA for the rest
     for (let i = 1; i < data.length; i++) {
         ema[i] = alpha * data[i] + (1 - alpha) * ema[i - 1];
     }

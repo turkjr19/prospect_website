@@ -1,85 +1,65 @@
-/* General Styles */
+/* Body and container styling */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
-    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
     text-align: center;
 }
 
-/* Input, Button, and Dropdown Styling */
-input, select, button {
+/* Center the pull-down menu and button */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Styling for the select menu and button */
+#playerSelect {
+    font-size: 1.2rem; /* Enlarge font */
     padding: 10px;
-    font-size: 16px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
     margin-right: 10px;
-    width: 200px; /* Match the button width */
 }
 
 button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+    font-size: 1.2rem; /* Enlarge font */
+    padding: 10px 15px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* Chart container - same width as table */
+.chart-container {
+    width: 80%; /* Same width as table */
+    max-width: 900px;
+    margin: 20px auto;
+    height: 400px; /* Retain original chart height */
 }
 
-/* Table Styling */
+/* Table styling - same width as chart */
 table {
-    width: 90%;
-    max-width: 1000px;
+    width: 80%; /* Same width as chart */
+    max-width: 900px; /* Matching max width */
     margin: 20px auto;
     border-collapse: collapse;
     background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
 }
 
-/* Further reduce table row height */
 th, td {
-    padding: 4px 8px; /* Further reduced vertical padding */
-    font-size: 12px; /* Smaller text size */
-    border: 1px solid #ddd;
+    padding: 8px; /* Adjust padding for compact look */
     text-align: center;
+    border: 1px solid #ddd;
+    font-size: 0.9rem; /* Make the font smaller */
 }
 
-/* Header Styling */
 thead {
     background-color: #007bff;
     color: white;
-}
-
-th {
-    font-weight: bold;
-}
-
-/* Chart Styling */
-.chart-container {
-    width: 80%;
-    max-width: 900px;
-    margin: 20px auto;
-    height: 400px;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    table {
-        width: 100%;
-    }
-
-    input, select, button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .chart-container {
-        width: 100%;
-        height: 300px;
-    }
 }
