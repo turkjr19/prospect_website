@@ -146,8 +146,8 @@ function drawCumulativePointsChart(labels, data, emaData) {
             ]
         },
         options: {
-            responsive: true, // Ensure responsive behavior
-            maintainAspectRatio: false, // Allow the chart to stretch vertically as needed
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     title: {
@@ -165,13 +165,7 @@ function drawCumulativePointsChart(labels, data, emaData) {
             }
         }
     });
-
-    // Ensure chart resizes on window resize
-    window.addEventListener('resize', () => {
-        window.cumulativeChart.resize();
-    });
 }
-
 
 // Function to calculate EMA (Exponential Moving Average)
 function calculateEMA(data, period) {
